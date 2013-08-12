@@ -43,6 +43,11 @@ namespace AutoMapper.QueryableExtensions
         {
             var typeMap = mappingEngine.ConfigurationProvider.FindTypeMapFor(typeIn, typeOut);
 
+            if (typeMap == null)
+            {
+                throw new AutoMapperMappingException(string.Format("Missing type map configuration or unsupported mapping. TypeIn: {0}, TypeOut: {1}", typeIn.FullName, typeOut.FullName));
+            }
+
             // this is the input parameter of this expression with name <variableName>
             ParameterExpression instanceParameter = Expression.Parameter(typeIn, "dto");
 
